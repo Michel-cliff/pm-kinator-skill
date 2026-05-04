@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.2.0, May 2026
+
+**Report generator:**
+- Weekly status report: shipped, in progress, blocked, next week focus. Pulls from board if connected, falls back to paste.
+- Milestone report: delivered, carried forward, what slowed us down, definition of done check. "What slowed us down" is never skipped.
+- Stakeholder update: outcome-focused, no ticket noise, written for investors or leadership. 30-day default window.
+- All three types apply the Content Generation Rule: context gathered in one message, shown before sending.
+- Help command updated with report triggers.
+- README updated with report usage section.
+
+---
+
 ## v1.1.0, May 2026
 
 **Session continuity:**

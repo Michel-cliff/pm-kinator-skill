@@ -204,6 +204,135 @@ At any point, the user can type `why?` after any output. The skill explains the 
 
 ---
 
+## Report Generator
+
+**Triggers:**
+- `Generate a weekly status report`
+- `Generate a milestone report for [milestone name]`
+- `Generate a stakeholder update`
+
+Apply the Content Generation Rule before generating any report. Ask all missing context in one message. Different audiences need different output: a weekly status for your own use reads nothing like an investor update.
+
+---
+
+### Weekly Status Report
+
+**Mandatory context, ask if missing:**
+
+| Field | Infer when possible | Ask when |
+|---|---|---|
+| **Period** | Default to last 7 days | User specifies a different range |
+| **Audience** | Default to self or team | Request hints at a specific reader |
+| **Highlights to include** | Pull from ticket activity and emails | No board or email data available |
+| **Anything to exclude** | Leave nothing out by default | User flags sensitive items |
+
+**Output format:**
+
+```
+Weekly Status, [date range]
+
+Shipped
+- [completed tickets or milestones, one line each]
+
+In progress
+- [active tickets with current status]
+
+Blocked
+- [blockers, owner if known, and resolution path]
+
+Focus next week
+- [planned priorities]
+```
+
+**Rules:**
+- If board is connected, pull from ticket activity automatically.
+- If not connected, ask the user to paste a summary of the week.
+- Keep each section to 5 items max. Prioritize, don't dump.
+- Flag if nothing shipped and no blockers are documented. That is a signal worth naming.
+
+---
+
+### Milestone Report
+
+**When to generate:** when a milestone is marked done, cancelled, or the user asks explicitly.
+
+**Mandatory context, ask if missing:**
+
+| Field | Infer when possible | Ask when |
+|---|---|---|
+| **Milestone name** | From the request | Multiple open milestones exist |
+| **Outcome** | Shipped / cancelled / partial | Not obvious from context |
+| **Retrospective notes** | None by default | User wants to include lessons |
+
+**Output format:**
+
+```
+Milestone Report: [name]
+Status: [Shipped / Cancelled / Partial]
+Closed: [date]
+
+Delivered
+- [what shipped, one line each]
+
+Carried forward
+- [what moved to the next milestone and why]
+
+What slowed us down
+- [honest, one line per blocker or delay]
+
+Definition of done: [met / not met, one sentence]
+
+Next milestone
+- [name and first Must ticket if known]
+```
+
+**Rules:**
+- Never skip "What slowed us down" even if the milestone went smoothly. Write "Nothing significant" rather than omitting it.
+- If definition of done was never set, note it and suggest adding one to the next milestone.
+- Keep the tone factual, not promotional. This is for learning, not celebration.
+
+---
+
+### Stakeholder Update
+
+**Audience:** investors, board members, leadership. No ticket noise, no internal jargon. Outcome-focused only.
+
+**Mandatory context, ask if missing:**
+
+| Field | Infer when possible | Ask when |
+|---|---|---|
+| **Audience** | Infer from request | Unclear if investor, board, or leadership |
+| **Timeframe** | Default to last 30 days | User specifies different window |
+| **Key metrics** | Leave as placeholders if unknown | User has numbers to include |
+| **Tone** | Default to professional and direct | Request hints at a specific register |
+| **Items to omit** | Nothing by default | User flags sensitive details |
+
+**Output format:**
+
+```
+[Project or company name] Update, [date]
+
+Progress
+- [2-3 outcome-focused bullets, no ticket IDs or internal jargon]
+
+Risks
+- [active risks worth flagging, with mitigation if one exists]
+- (omit if none)
+
+Focus for the next 30 days
+- [what you are building toward, why it matters]
+
+[Optional: one metric or traction signal if the user provided one]
+```
+
+**Rules:**
+- Outcomes only. "Shipped user onboarding v2" not "closed 14 tickets".
+- One risk maximum unless the situation genuinely warrants more.
+- Never promise a timeline that hasn't been confirmed against the board.
+- Always show before sending. Never send without explicit user confirmation.
+
+---
+
 ## Help Command
 
 **Trigger:** `help`
@@ -236,6 +365,11 @@ Slack
 
 Milestones
   Create a milestone for [goal]
+
+Reports
+  Generate a weekly status report
+  Generate a milestone report for [milestone name]
+  Generate a stakeholder update
 
 Anytime
   why?                              Explain the reasoning behind the last output

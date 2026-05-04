@@ -194,6 +194,27 @@ Claude extracts the actionable part, links the issue URL in the ticket descripti
 
 ---
 
+### 📊 Generate a report
+
+Three types, each adapted to its audience:
+
+```
+Generate a weekly status report
+```
+What shipped, what's blocked, what's next. For yourself, your team, or a manager. Pulls from the last 7 days of ticket activity if your board is connected.
+
+```
+Generate a milestone report for [milestone name]
+```
+What was delivered, what carried forward and why, what slowed things down. Triggered when a milestone closes. Honest by design: "what slowed us down" is never skipped.
+
+```
+Generate a stakeholder update
+```
+Outcome-focused, no ticket noise, no internal jargon. Written for investors, board members, or leadership. Timeframe defaults to the last 30 days.
+
+---
+
 ### 💾 Save your session
 
 ```
