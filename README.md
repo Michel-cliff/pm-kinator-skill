@@ -1,11 +1,11 @@
 
 ```
- ██████╗ ███╗   ███╗     █████╗ ███████╗███████╗██╗███████╗████████╗
- ██╔══██╗████╗ ████║    ██╔══██╗██╔════╝██╔════╝██║██╔════╝╚══██╔══╝
- ██████╔╝██╔████╔██║    ███████║███████╗███████╗██║███████╗   ██║
- ██╔═══╝ ██║╚██╔╝██║    ██╔══██║╚════██║╚════██║██║╚════██║   ██║
- ██║     ██║ ╚═╝ ██║    ██║  ██║███████║███████║██║███████║   ██║
- ╚═╝     ╚═╝     ╚═╝    ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚══════╝   ╚═╝
+██████╗ ███╗   ███╗    ██╗  ██╗██╗███╗   ██╗ █████╗ ████████╗ ██████╗ ██████╗ 
+██╔══██╗████╗ ████║    ██║ ██╔╝██║████╗  ██║██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
+██████╔╝██╔████╔██║    █████╔╝ ██║██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝
+██╔═══╝ ██║╚██╔╝██║    ██╔═██╗ ██║██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗
+██║     ██║ ╚═╝ ██║    ██║  ██╗██║██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██╗
+╚═╝     ╚═╝     ╚═╝    ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
 ```
 
 # PM Kinator Skill for Claude
@@ -42,11 +42,11 @@ A Claude skill that acts as your senior PM assistant. It triages emails, manages
 
 ## ✨ What it does
 
-- ☀️ **Morning triage** — reads your inbox, surfaces blockers, gives you a ranked focus list
-- 🎫 **Ticket management** — creates, updates, and triages tickets with MoSCoW priority baked in
-- 📧 **Email handling** — classifies threads, drafts replies, escalates blockers to your board
-- 🗺️ **Milestone tracking** — groups tickets into deliverables, watches for risks, suggests roadmap adjustments
-- 🎓 **Learning mode** — explains PM concepts inline if you're new to this, without being annoying about it
+- ☀️ **Morning triage:** reads your inbox, surfaces blockers, gives you a ranked focus list
+- 🎫 **Ticket management:** creates, updates, and triages tickets with MoSCoW priority baked in
+- 📧 **Email handling:** classifies threads, drafts replies, escalates blockers to your board
+- 🗺️ **Milestone tracking:** groups tickets into deliverables, watches for risks, suggests roadmap adjustments
+- 🎓 **Learning mode:** explains PM concepts inline if you're new to this, without being annoying about it
 
 ---
 
@@ -72,15 +72,29 @@ cp SKILL.md ~/.claude/skills/pm-kinator.md
 Copy-Item SKILL.md "$env:USERPROFILE\.claude\skills\pm-kinator.md"
 ```
 
-### Step 3: Connect your tools *(optional but makes it better)*
+### Step 3: Connect your tools
 
-The skill works with whatever MCPs you have in Claude. No tools? It asks you to paste your board state and runs from there. No excuses.
+The skill adapts to whatever MCPs you have configured in Claude. It does not care which specific product you use, only which category it belongs to.
 
-| Tool | What it unlocks |
+| Category | Examples | What it unlocks |
+|---|---|---|
+| 📬 Email | Gmail, Outlook, any other | Reads inbox, drafts replies, classifies threads |
+| 📋 Board / PM | Linear, Jira, Asana, Monday, ClickUp, Notion, Trello, Shortcut, Height, Basecamp, and others | Creates and updates tickets directly |
+| 💬 Messaging | Slack, Microsoft Teams, Discord, and others | Reads threads, drafts messages, converts threads to tickets |
+| 📅 Calendar | Google Calendar, Outlook Calendar, and others | Surfaces deadlines in triage |
+| 🐙 Code platform | GitHub, GitLab, Bitbucket, Azure DevOps, and others | Tracks stale PRs, links issues to tickets, flags new bugs |
+
+**The experience scales with what you connect:**
+
+| Setup | What you get |
 |---|---|
-| 📬 Gmail | Reads inbox, drafts replies, classifies threads |
-| 📋 Linear / Jira / Asana | Creates and updates tickets directly |
-| 📅 Google Calendar | Surfaces deadlines in triage |
+| No tools | Manual mode. Paste your inbox and board state, get structured output to copy-paste. Still useful, more friction. |
+| Board tool only | Ticket creation, triage, and milestone management work automatically. Morning triage needs manual email paste. |
+| Email + board | Full morning triage. Automatic email classification, ticket creation, and roadmap signals. |
+| Email + board + messaging | Complete picture. Blockers from all channels surface in one place. |
+| All categories | Maximum signal. Roadmap intelligence has the most data to work with. |
+
+No tools at all? The skill still works. It will ask you to paste context and output text you can copy into whatever you use.
 
 ---
 
@@ -94,7 +108,9 @@ whoami
 
 Six quick questions. Claude learns your role, tools, rhythm, pain points, and PM experience level. Every command adapts to your answers. Takes 60 seconds. Skip it and the skill works fine, but it won't know you're a solo founder who hates delegation framing.
 
-Update anytime: `update my profile`
+At the end, Whoami outputs a **Session Card**: a compact block you save once and paste at the start of every new session to skip setup. No more starting from scratch.
+
+Update anytime: `update my profile` or `save session` to regenerate your card.
 
 ---
 
@@ -155,6 +171,46 @@ why?
 ```
 
 After any output, type `why?` and Claude explains the reasoning behind its last decision. Which signals it used, what it considered, why it chose this output. Works for everyone, not just learners.
+
+---
+
+### 💬 Draft a message on your messaging tool
+
+```
+Draft a message to [name or channel] on [Slack / Teams / other]: [context]
+```
+
+Claude keeps it short (3 sentences for DMs, 5 lines for channels) and matches the tone of the channel. Works with Slack, Teams, Discord, or whatever messaging tool you have connected.
+
+---
+
+### 🐙 Turn a code platform issue into a ticket
+
+```
+Turn this issue into a ticket: [URL or paste]
+```
+
+Claude extracts the actionable part, links the issue URL in the ticket description, and proposes acceptance criteria. Works with GitHub, GitLab, Bitbucket, Azure DevOps, and others.
+
+---
+
+### 💾 Save your session
+
+```
+save session
+```
+
+Generates your Session Card. Copy it, save it in your notes, and paste it at the start of your next Claude session to skip Whoami entirely.
+
+---
+
+### 🆘 Get help
+
+```
+help
+```
+
+Prints the full command reference in one clean block. Useful when you forget a command name or want to show the skill to someone new.
 
 ---
 
