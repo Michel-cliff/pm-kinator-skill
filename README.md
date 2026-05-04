@@ -277,6 +277,20 @@ GitHub topics: `claude-skill` `claude-ai` `prompt-engineering` `project-manageme
 
 ---
 
+## 🔒 Privacy and data
+
+- **Your data stays in your Claude session.** PM Kinator does not collect, store, or transmit any data. Everything it reads or generates lives inside your Claude conversation. Anthropic's privacy policy governs how that session data is handled.
+- **You are responsible for what you connect.** If your tools contain customer PII, confidential business data, or information subject to privacy regulations (GDPR, CCPA, HIPAA, and others), it is your responsibility to ensure your use of this skill complies with those obligations before connecting them.
+- **Do not paste regulated data without understanding your obligations.** This includes customer email addresses, personal identifiers, health information, or financial records. When in doubt, anonymize before pasting.
+
+---
+
+## ⚠️ Disclaimer
+
+This skill is provided as-is under the MIT license, with no warranty of any kind. The author is not liable for decisions made based on its output, data processed through it, or any consequences of its use. Always review generated content before acting on it or sending it.
+
+---
+
 ## 📄 License
 
 MIT. Use it, fork it, improve it.
