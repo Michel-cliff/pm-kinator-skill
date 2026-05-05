@@ -21,36 +21,36 @@ A Claude skill that acts as your senior PM assistant. It triages emails, manages
 
 ---
 
-## 🗺️ How it works
+## How it works
 
 ```
-  📧 Inbox           🎫 Board            🗺️  Roadmap
-     │                   │                    │
+  Inbox              Board               Roadmap
+     |                   |                    |
   Classify            Prioritize           Detect risks
   Draft replies       Create / update      Spot patterns
   Escalate            Triage stale         Suggest changes
-     │                   │                    │
-     └───────────────────┴────────────────────┘
-                          │
-                          ▼
-              ☀️  Morning Triage
+     |                   |                    |
+     +-------------------+--------------------+
+                          |
+                          v
+              Morning Triage
          Your ranked plan for the day.
          No more "where do I even start."
 ```
 
 ---
 
-## ✨ What it does
+## What it does
 
-- ☀️ **Morning triage:** reads your inbox, surfaces blockers, gives you a ranked focus list
-- 🎫 **Ticket management:** creates, updates, and triages tickets with MoSCoW priority baked in
-- 📧 **Email handling:** classifies threads, drafts replies, escalates blockers to your board
-- 🗺️ **Milestone tracking:** groups tickets into deliverables, watches for risks, suggests roadmap adjustments
-- 🎓 **Learning mode:** explains PM concepts inline if you're new to this, without being annoying about it
+- **Morning triage:** reads your inbox, surfaces blockers, gives you a ranked focus list
+- **Ticket management:** creates, updates, and triages tickets with MoSCoW priority baked in
+- **Email handling:** classifies threads, drafts replies, escalates blockers to your board
+- **Milestone tracking:** groups tickets into deliverables, watches for risks, suggests roadmap adjustments
+- **Learning mode:** explains PM concepts inline if you're new to this, without being annoying about it
 
 ---
 
-## 🚀 Install
+## Install
 
 ### Step 1: Get the skill file
 
@@ -64,12 +64,14 @@ Or just download [SKILL.md](./SKILL.md) directly. It's one file.
 
 **Mac / Linux**
 ```bash
-cp SKILL.md ~/.claude/skills/pm-kinator.md
+mkdir -p ~/.claude/skills/pm-kinator
+cp SKILL.md ~/.claude/skills/pm-kinator/SKILL.md
 ```
 
 **Windows**
 ```powershell
-Copy-Item SKILL.md "$env:USERPROFILE\.claude\skills\pm-kinator.md"
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills\pm-kinator"
+Copy-Item SKILL.md "$env:USERPROFILE\.claude\skills\pm-kinator\SKILL.md"
 ```
 
 ### Step 3: Connect your tools
@@ -78,11 +80,11 @@ The skill adapts to whatever MCPs you have configured in Claude. It does not car
 
 | Category | Examples | What it unlocks |
 |---|---|---|
-| 📬 Email | Gmail, Outlook, any other | Reads inbox, drafts replies, classifies threads |
-| 📋 Board / PM | Linear, Jira, Asana, Monday, ClickUp, Notion, Trello, Shortcut, Height, Basecamp, and others | Creates and updates tickets directly |
-| 💬 Messaging | Slack, Microsoft Teams, Discord, and others | Reads threads, drafts messages, converts threads to tickets |
-| 📅 Calendar | Google Calendar, Outlook Calendar, and others | Surfaces deadlines in triage |
-| 🐙 Code platform | GitHub, GitLab, Bitbucket, Azure DevOps, and others | Tracks stale PRs, links issues to tickets, flags new bugs |
+| Email | Gmail, Outlook, any other | Reads inbox, drafts replies, classifies threads |
+| Board / PM | Linear, Jira, Asana, Monday, ClickUp, Notion, Trello, Shortcut, Height, Basecamp, and others | Creates and updates tickets directly |
+| Messaging | Slack, Microsoft Teams, Discord, and others | Reads threads, drafts messages, converts threads to tickets |
+| Calendar | Google Calendar, Outlook Calendar, and others | Surfaces deadlines in triage |
+| Code platform | GitHub, GitLab, Bitbucket, Azure DevOps, and others | Tracks stale PRs, links issues to tickets, flags new bugs |
 
 **The experience scales with what you connect:**
 
@@ -98,9 +100,9 @@ No tools at all? The skill still works. It will ask you to paste context and out
 
 ---
 
-## 💬 Usage
+## Usage
 
-### 🧑 First run: set up your profile
+### First run: set up your profile
 
 ```
 whoami
@@ -108,13 +110,13 @@ whoami
 
 Six quick questions. Claude learns your role, tools, rhythm, pain points, and PM experience level. Every command adapts to your answers. Takes 60 seconds. Skip it and the skill works fine, but it won't know you're a solo founder who hates delegation framing.
 
-At the end, Whoami outputs a **Session Card**: a compact block you save once and paste at the start of every new session to skip setup. No more starting from scratch.
+Your profile is saved automatically to disk. Next session, the skill loads it silently and picks up where you left off. No copy-pasting required.
 
-Update anytime: `update my profile` or `save session` to regenerate your card.
+Update anytime: `update my profile`.
 
 ---
 
-### ☀️ Daily habit: morning triage
+### Daily habit: morning triage
 
 ```
 Triage my morning
@@ -124,7 +126,7 @@ Every morning. Same trigger, predictable output, fast to scan. Claude reads your
 
 ---
 
-### 🎫 Create a ticket
+### Create a ticket
 
 ```
 Create a ticket: users can't reset their password on mobile
@@ -134,7 +136,7 @@ Claude gathers the context it needs (in one message, not twenty), proposes accep
 
 ---
 
-### 📧 Turn an email into a ticket
+### Turn an email into a ticket
 
 ```
 Turn this email thread into a ticket: [paste or describe it]
@@ -144,7 +146,7 @@ Claude extracts the actionable part only. No copy-paste noise.
 
 ---
 
-### 🗺️ Plan a milestone
+### Plan a milestone
 
 ```
 Create a milestone for [goal]
@@ -154,7 +156,7 @@ Claude groups relevant tickets, applies MoSCoW, writes a definition of done, che
 
 ---
 
-### 📦 Triage your backlog
+### Triage your backlog
 
 ```
 Triage my backlog
@@ -164,7 +166,7 @@ Surfaces stale tickets, flags Must items without owners, and asks what to do wit
 
 ---
 
-### ❓ Ask why
+### Ask why
 
 ```
 why?
@@ -174,7 +176,7 @@ After any output, type `why?` and Claude explains the reasoning behind its last 
 
 ---
 
-### 💬 Draft a message on your messaging tool
+### Draft a message on your messaging tool
 
 ```
 Draft a message to [name or channel] on [Slack / Teams / other]: [context]
@@ -184,7 +186,7 @@ Claude keeps it short (3 sentences for DMs, 5 lines for channels) and matches th
 
 ---
 
-### 🐙 Turn a code platform issue into a ticket
+### Turn a code platform issue into a ticket
 
 ```
 Turn this issue into a ticket: [URL or paste]
@@ -194,7 +196,7 @@ Claude extracts the actionable part, links the issue URL in the ticket descripti
 
 ---
 
-### 📊 Generate a report
+### Generate a report
 
 Three types, each adapted to its audience:
 
@@ -215,17 +217,17 @@ Outcome-focused, no ticket noise, no internal jargon. Written for investors, boa
 
 ---
 
-### 💾 Save your session
+### Save your session
 
 ```
 save session
 ```
 
-Generates your Session Card. Copy it, save it in your notes, and paste it at the start of your next Claude session to skip Whoami entirely.
+Saves your current profile and session context to disk: open items, key decisions, and any risks flagged this session. The skill reads this automatically at the start of your next session.
 
 ---
 
-### 🆘 Get help
+### Get help
 
 ```
 help
@@ -235,22 +237,22 @@ Prints the full command reference in one clean block. Useful when you forget a c
 
 ---
 
-## 🎯 Priority framework: MoSCoW
+## Priority framework: MoSCoW
 
 One label per ticket. No exceptions.
 
-| Label | Meaning | Vibe |
+| Label | Meaning | When to use |
 |---|---|---|
-| 🔴 **Must** | Blocking. Ship stops without it. | Fix it now or explain yourself |
-| 🟡 **Should** | High value, not blocking. | Schedule it seriously |
-| 🟢 **Could** | Nice to have. | Backlog purgatory |
-| ⚪ **Won't** | Out of scope for now. | A decision, not a rejection |
+| **Must** | Blocking. Ship stops without it. | Fix it now or explain yourself |
+| **Should** | High value, not blocking. | Schedule it seriously |
+| **Could** | Nice to have. | Backlog purgatory |
+| **Won't** | Out of scope for now. | A decision, not a rejection |
 
-If everything is 🔴 Must, Claude will tell you that's not how this works.
+If everything is Must, Claude will tell you that's not how this works.
 
 ---
 
-## 🚫 What this skill won't do
+## What this skill won't do
 
 - **Won't make final decisions.** It recommends. You confirm. Always.
 - **Won't invent context.** If it doesn't know, it asks once, then moves on.
@@ -260,7 +262,7 @@ If everything is 🔴 Must, Claude will tell you that's not how this works.
 
 ---
 
-## 💡 Tips
+## Tips
 
 - **Paste your board state at session start.** The more context, the better the triage.
 - **Be specific about blockers.** "Blocked on X" beats "things feel slow."
@@ -269,7 +271,7 @@ If everything is 🔴 Must, Claude will tell you that's not how this works.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Issues and PRs welcome. If you add a new tool integration or command pattern, include an example in `examples/`.
 
@@ -277,7 +279,7 @@ GitHub topics: `claude-skill` `claude-ai` `prompt-engineering` `project-manageme
 
 ---
 
-## 🔒 Privacy and data
+## Privacy and data
 
 - **Your data stays in your Claude session.** PM Kinator does not collect, store, or transmit any data. Everything it reads or generates lives inside your Claude conversation. Anthropic's privacy policy governs how that session data is handled.
 - **You are responsible for what you connect.** If your tools contain customer PII, confidential business data, or information subject to privacy regulations (GDPR, CCPA, HIPAA, and others), it is your responsibility to ensure your use of this skill complies with those obligations before connecting them.
@@ -285,12 +287,12 @@ GitHub topics: `claude-skill` `claude-ai` `prompt-engineering` `project-manageme
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This skill is provided as-is under the MIT license, with no warranty of any kind. The author is not liable for decisions made based on its output, data processed through it, or any consequences of its use. Always review generated content before acting on it or sending it.
 
 ---
 
-## 📄 License
+## License
 
 MIT. Use it, fork it, improve it.
