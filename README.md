@@ -49,6 +49,25 @@ A Claude skill that acts as your senior PM assistant. It triages emails, manages
 
 ---
 
+## Where you can use it
+
+| Platform | Supported | Notes |
+|---|---|---|
+| Claude Code (CLI / IDE) | Yes, full support | Slash command, auto profile persistence, file system access |
+| Claude.ai Projects | Yes, partial | Paste SKILL.md as project instructions. Persistence requires manual Session Card. |
+| Claude.ai (one-off chat) | Yes, manual | Paste SKILL.md at the start of any conversation. |
+| Claude API | Yes | Set SKILL.md as the system prompt. |
+
+### Using it in Claude.ai Projects
+
+1. Open Claude.ai and create a new Project.
+2. Go to the project instructions and paste the full contents of [SKILL.md](./SKILL.md).
+3. Every conversation in that project will have PM Kinator active.
+
+Note: Claude.ai has no file system access, so automatic profile persistence does not work. Use the `save session` command to generate a Session Card, copy it, and paste it at the start of each new conversation to restore your profile.
+
+---
+
 ## Install
 
 ### Step 1: Get the skill file
