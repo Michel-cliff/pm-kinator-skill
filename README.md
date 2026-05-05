@@ -10,7 +10,6 @@
 
 # PM Kinator Skill for Claude
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![Built with Claude](https://img.shields.io/badge/built%20with-Claude-blueviolet)
 ![No meetings required](https://img.shields.io/badge/meetings-zero-orange)
@@ -289,10 +288,14 @@ GitHub topics: `claude-skill` `claude-ai` `prompt-engineering` `project-manageme
 
 ## Disclaimer
 
-This skill is provided as-is under the MIT license, with no warranty of any kind. The author is not liable for decisions made based on its output, data processed through it, or any consequences of its use. Always review generated content before acting on it or sending it.
+This skill is provided as-is, with no warranty of any kind. The author is not liable for decisions made based on its output, data processed through it, or any consequences of its use. Always review generated content before acting on it or sending it.
 
 ---
 
 ## License
 
-MIT. Use it, fork it, improve it.
+Free to use, copy, modify, and distribute. Any derivative work must carry the same terms.
+
+The author provides no warranty and accepts no liability for any harm, loss, or consequence arising from use of this skill or its output. Users are responsible for their own compliance with applicable laws and platform terms.
+
+See [LICENSE](./LICENSE) for the full text.
