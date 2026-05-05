@@ -49,72 +49,99 @@ A Claude skill that acts as your senior PM assistant. It triages emails, manages
 
 ---
 
-## Where you can use it
+## Getting started
 
-| Platform | Supported | Notes |
-|---|---|---|
-| Claude Code (CLI / IDE) | Yes, full support | Slash command, auto profile persistence, file system access |
-| Claude.ai Projects | Yes, partial | Paste SKILL.md as project instructions. Persistence requires manual Session Card. |
-| Claude.ai (one-off chat) | Yes, manual | Paste SKILL.md at the start of any conversation. |
-| Claude API | Yes | Set SKILL.md as the system prompt. |
+### Option A: Claude.ai (recommended for most users, no setup required)
 
-### Using it in Claude.ai Projects
+You only need a Claude.ai account. No installation, no technical setup.
 
-1. Open Claude.ai and create a new Project.
-2. Go to the project instructions and paste the full contents of [SKILL.md](./SKILL.md).
-3. Every conversation in that project will have PM Kinator active.
+**Step 1: Create a Project**
 
-Note: Claude.ai has no file system access, so automatic profile persistence does not work. Use the `save session` command to generate a Session Card, copy it, and paste it at the start of each new conversation to restore your profile.
+1. Go to claude.ai and sign in.
+2. Click "Projects" in the left sidebar, then "New project".
+3. Give it a name, for example "PM Kinator".
+
+**Step 2: Add the skill as project instructions**
+
+1. Inside your project, click "Set project instructions" (or the settings icon).
+2. Open [SKILL.md](./SKILL.md) in this repo, select all the text, and copy it.
+3. Paste it into the project instructions field and save.
+
+That's it. Every conversation you start inside this project will have PM Kinator active.
+
+**Step 3: Connect your tools (optional but recommended)**
+
+Claude.ai lets you connect external tools through its built-in integrations. No technical setup needed.
+
+1. Go to claude.ai Settings > Integrations.
+2. Connect the tools you use: Gmail, Google Drive, Google Calendar, and others available in the list.
+3. Come back to your PM Kinator project and start a conversation. The skill will automatically use whatever you connected.
+
+**What to expect without connected tools:** The skill still works. It will ask you to paste your inbox summary and board state, and work from that. More friction, same logic.
+
+**A note on profile persistence in Claude.ai:** Claude.ai does not have access to your file system, so your profile cannot be saved automatically between sessions. Run `whoami` on your first conversation, then use `save session` at the end to get a compact profile block. Copy it and paste it at the start of your next conversation to restore your settings instantly.
 
 ---
 
-## Install
+### Option B: Claude Code (for developers and technical users)
 
-### Step 1: Get the skill file
+Claude Code is Anthropic's CLI and IDE tool. It supports skills as slash commands and has full file system access, so your profile persists automatically between sessions.
+
+**Step 1: Get the skill file**
 
 ```bash
 git clone https://github.com/Michel-cliff/pm-kinator-skill.git
 ```
 
-Or just download [SKILL.md](./SKILL.md) directly. It's one file.
+Or download [SKILL.md](./SKILL.md) directly.
 
-### Step 2: Place it in your Claude skills folder
+**Step 2: Place it in your Claude skills folder**
 
-**Mac / Linux**
+Mac / Linux
 ```bash
 mkdir -p ~/.claude/skills/pm-kinator
 cp SKILL.md ~/.claude/skills/pm-kinator/SKILL.md
 ```
 
-**Windows**
+Windows
 ```powershell
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills\pm-kinator"
 Copy-Item SKILL.md "$env:USERPROFILE\.claude\skills\pm-kinator\SKILL.md"
 ```
 
-### Step 3: Connect your tools
+Restart Claude Code. Type `/pm-kinator` to invoke the skill.
 
-The skill adapts to whatever MCPs you have configured in Claude. It does not care which specific product you use, only which category it belongs to.
+**Step 3: Connect your tools**
 
-| Category | Examples | What it unlocks |
-|---|---|---|
-| Email | Gmail, Outlook, any other | Reads inbox, drafts replies, classifies threads |
-| Board / PM | Linear, Jira, Asana, Monday, ClickUp, Notion, Trello, Shortcut, Height, Basecamp, and others | Creates and updates tickets directly |
-| Messaging | Slack, Microsoft Teams, Discord, and others | Reads threads, drafts messages, converts threads to tickets |
-| Calendar | Google Calendar, Outlook Calendar, and others | Surfaces deadlines in triage |
-| Code platform | GitHub, GitLab, Bitbucket, Azure DevOps, and others | Tracks stale PRs, links issues to tickets, flags new bugs |
+Claude Code uses MCP (Model Context Protocol) servers for tool integrations. You install a server once and it is available in every session.
 
-**The experience scales with what you connect:**
-
-| Setup | What you get |
+| Tool | How to connect |
 |---|---|
-| No tools | Manual mode. Paste your inbox and board state, get structured output to copy-paste. Still useful, more friction. |
-| Board tool only | Ticket creation, triage, and milestone management work automatically. Morning triage needs manual email paste. |
-| Email + board | Full morning triage. Automatic email classification, ticket creation, and roadmap signals. |
-| Email + board + messaging | Complete picture. Blockers from all channels surface in one place. |
-| All categories | Maximum signal. Roadmap intelligence has the most data to work with. |
+| Gmail | Add the Gmail MCP to your Claude Code config |
+| Google Calendar | Add the Google Calendar MCP |
+| GitHub | Add the GitHub MCP |
+| Slack | Add the Slack MCP |
+| Linear, Jira, Notion, and others | Community MCPs available, quality varies |
 
-No tools at all? The skill still works. It will ask you to paste context and output text you can copy into whatever you use.
+Search for "Claude MCP [tool name]" to find setup instructions for the tool you want. Once an MCP is configured, PM Kinator will use it automatically with no changes needed.
+
+No tools connected? The skill still works. Paste your board state or inbox summary at the start of a session and it will work from that.
+
+---
+
+## What you can connect
+
+The skill adapts to whatever is available. It does not require any specific tool.
+
+| Category | Examples |
+|---|---|
+| Email | Gmail, Outlook |
+| Board / PM | Linear, Jira, Asana, Monday, ClickUp, Notion, Trello, Shortcut, Basecamp |
+| Messaging | Slack, Microsoft Teams, Discord |
+| Calendar | Google Calendar, Outlook Calendar |
+| Code platform | GitHub, GitLab, Bitbucket, Azure DevOps |
+
+The more you connect, the more the skill can do automatically. But it is useful even with nothing connected.
 
 ---
 
@@ -126,9 +153,10 @@ No tools at all? The skill still works. It will ask you to paste context and out
 whoami
 ```
 
-Six quick questions. Claude learns your role, tools, rhythm, pain points, and PM experience level. Every command adapts to your answers. Takes 60 seconds. Skip it and the skill works fine, but it won't know you're a solo founder who hates delegation framing.
+Six quick questions. Claude learns your role, tools, rhythm, pain points, and experience level. Every command adapts to your answers. Takes 60 seconds.
 
-Your profile is saved automatically to disk. Next session, the skill loads it silently and picks up where you left off. No copy-pasting required.
+On Claude Code: your profile is saved to disk automatically and loaded next session.
+On Claude.ai: run `save session` at the end of each conversation and paste the output at the start of the next one.
 
 Update anytime: `update my profile`.
 
@@ -190,17 +218,17 @@ Surfaces stale tickets, flags Must items without owners, and asks what to do wit
 why?
 ```
 
-After any output, type `why?` and Claude explains the reasoning behind its last decision. Which signals it used, what it considered, why it chose this output. Works for everyone, not just learners.
+After any output, type `why?` and Claude explains the reasoning behind its last decision. Works for everyone, not just learners.
 
 ---
 
-### Draft a message on your messaging tool
+### Draft a message
 
 ```
 Draft a message to [name or channel] on [Slack / Teams / other]: [context]
 ```
 
-Claude keeps it short (3 sentences for DMs, 5 lines for channels) and matches the tone of the channel. Works with Slack, Teams, Discord, or whatever messaging tool you have connected.
+Claude keeps it short (3 sentences for DMs, 5 lines for channels) and matches the tone of the channel.
 
 ---
 
@@ -210,28 +238,26 @@ Claude keeps it short (3 sentences for DMs, 5 lines for channels) and matches th
 Turn this issue into a ticket: [URL or paste]
 ```
 
-Claude extracts the actionable part, links the issue URL in the ticket description, and proposes acceptance criteria. Works with GitHub, GitLab, Bitbucket, Azure DevOps, and others.
+Claude extracts the actionable part, links the issue URL in the ticket description, and proposes acceptance criteria.
 
 ---
 
 ### Generate a report
 
-Three types, each adapted to its audience:
-
 ```
 Generate a weekly status report
 ```
-What shipped, what's blocked, what's next. For yourself, your team, or a manager. Pulls from the last 7 days of ticket activity if your board is connected.
+What shipped, what's blocked, what's next. Pulls from the last 7 days of ticket activity if your board is connected.
 
 ```
 Generate a milestone report for [milestone name]
 ```
-What was delivered, what carried forward and why, what slowed things down. Triggered when a milestone closes. Honest by design: "what slowed us down" is never skipped.
+What was delivered, what carried forward and why, what slowed things down.
 
 ```
 Generate a stakeholder update
 ```
-Outcome-focused, no ticket noise, no internal jargon. Written for investors, board members, or leadership. Timeframe defaults to the last 30 days.
+Outcome-focused, no ticket noise, no internal jargon. Written for investors, board members, or leadership.
 
 ---
 
@@ -241,7 +267,8 @@ Outcome-focused, no ticket noise, no internal jargon. Written for investors, boa
 save session
 ```
 
-Saves your current profile and session context to disk: open items, key decisions, and any risks flagged this session. The skill reads this automatically at the start of your next session.
+On Claude Code: saves profile and session context to disk automatically.
+On Claude.ai: outputs a compact profile block to copy and paste at the start of your next conversation.
 
 ---
 
@@ -251,7 +278,7 @@ Saves your current profile and session context to disk: open items, key decision
 help
 ```
 
-Prints the full command reference in one clean block. Useful when you forget a command name or want to show the skill to someone new.
+Prints the full command reference in one clean block.
 
 ---
 
