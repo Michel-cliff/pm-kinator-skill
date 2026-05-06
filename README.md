@@ -57,7 +57,7 @@ You only need a Claude.ai account. No installation, no technical setup.
 
 > **Video walkthrough** (covers Steps 1 and 2 below)
 
-![How to import the skill into Claude.ai](https://github.com/user-attachments/assets/d8b91aab-e1ee-4aa5-9f6c-d5f93041e1c4)
+![How to import the skill into Claude.ai](https://github.com/user-attachments/assets/4d21d4c3-ae20-418b-b313-1b81b8b0f374)
 
 **Step 1: Create a Project**
 
