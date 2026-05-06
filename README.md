@@ -1,12 +1,7 @@
 
-```
-██████╗ ███╗   ███╗    ██╗  ██╗██╗███╗   ██╗ █████╗ ████████╗ ██████╗ ██████╗ 
-██╔══██╗████╗ ████║    ██║ ██╔╝██║████╗  ██║██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
-██████╔╝██╔████╔██║    █████╔╝ ██║██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝
-██╔═══╝ ██║╚██╔╝██║    ██╔═██╗ ██║██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗
-██║     ██║ ╚═╝ ██║    ██║  ██╗██║██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██╗
-╚═╝     ╚═╝     ╚═╝    ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
-```
+<p align="center">
+  <img src="ressources/Logo.png" alt="PM Kinator" width="320" />
+</p>
 
 # PM Kinator Skill for Claude
 
@@ -57,7 +52,7 @@ You only need a Claude.ai account. No installation, no technical setup.
 
 > **Video walkthrough** (covers Steps 1 and 2 below)
 
-![How to import the skill into Claude.ai](https://github.com/user-attachments/assets/4d21d4c3-ae20-418b-b313-1b81b8b0f374)
+![How to import the skill into Claude.ai](ressources/Tutorial.gif)
 
 **Step 1: Create a Project**
 
