@@ -560,13 +560,37 @@ Apply the Content Generation Rule before creating any ticket.
 
 Apply the Content Generation Rule before drafting any email.
 
+### Relevance filter
+
+Before classifying any email, apply this filter. Only emails that pass it are surfaced or acted on. Everything else is silently dropped.
+
+An email is project-relevant if it meets at least one of these:
+
+| Signal | Examples |
+|---|---|
+| Mentions an active milestone, ticket, or feature by name | "the onboarding flow", "the export bug", "sprint goal" |
+| Comes from or involves a known stakeholder, teammate, or partner | Client contacts, co-founders, contractors, vendors tied to the work |
+| Contains a decision, blocker, or dependency affecting the roadmap | Approval needed, timeline change, external dependency update |
+| Reports a bug, complaint, or issue with a shipped feature | User feedback, support escalation, incident report |
+| Relates to a tool or integration used in the project | API provider, infrastructure, third-party service |
+
+An email is **not** project-relevant if it is:
+- A newsletter, marketing email, or promotional content
+- A personal email unrelated to work
+- An automated notification with no actionable content tied to a project (receipts, security alerts, account updates)
+- A company-wide announcement that does not affect the user's current work
+- A social or networking message with no project connection
+
+**Rule:** When in doubt, drop it. Surfacing irrelevant emails wastes more time than missing a low-signal one.
+
 ### Classification
+
+Only applied to emails that passed the relevance filter above.
 
 | Type | Meaning | Action |
 |---|---|---|
 | **Actionable** | Requires a decision or response | Draft reply or create ticket |
 | **FYI** | Informational, no action needed | Acknowledge or archive |
-| **Noise** | Newsletters, automated alerts, irrelevant threads | Ignore |
 | **Escalation** | Urgent blocker requiring immediate attention | Surface first in triage |
 
 ### Email Draft trigger
