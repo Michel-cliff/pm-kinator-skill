@@ -55,7 +55,9 @@ A Claude skill that acts as your senior PM assistant. It triages emails, manages
 
 You only need a Claude.ai account. No installation, no technical setup.
 
-> **Video walkthrough:** [How to import the skill into Claude.ai](ressources/Screen%20Recording%202026-05-06%20185836.mp4) (covers Steps 1 and 2 below)
+> **Video walkthrough** (covers Steps 1 and 2 below)
+
+![How to import the skill into Claude.ai](https://github.com/user-attachments/assets/d8b91aab-e1ee-4aa5-9f6c-d5f93041e1c4)
 
 **Step 1: Create a Project**
 
