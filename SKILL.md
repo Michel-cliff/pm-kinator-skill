@@ -38,93 +38,27 @@ If nothing is connected, output formatted text the user can copy-paste into what
 
 ## Brand and Visual Style
 
-All in-chat output uses native markdown elements only. No Unicode box-drawing characters, no monospace shells. Claude.ai renders markdown natively — use that rendering, not ASCII art.
+**Core rule:** Never wrap output in a fenced code block unless showing actual code. Let Claude.ai's native markdown rendering do the work.
 
-**Core rule:** Never wrap output in a fenced code block (``` ``` ```) unless showing actual code. Code blocks force monospace and kill visual hierarchy. Always write markdown directly.
+**Brand values:** warm but direct, structured but not rigid, professional without being corporate. Outputs should feel like they came from a sharp colleague, not a template engine.
 
-### Design tokens
+**Formatting principles:**
+- Use markdown elements that fit the content: headers when there is hierarchy, tables when comparing, bullets when listing, blockquotes when calling something out. Do not force a structure that does not serve the content.
+- Never produce the same layout twice just because a template says to. Adapt to what the user needs in the moment.
+- Commands the user can type should always appear as inline code: `like this`.
+- The `◆` mark and the name PM KINATOR appear in headers and footers, but only where they add clarity, not as decoration on every line.
+- Omit any section, label, or divider that adds no information. Empty structure is noise.
 
-| Element | Markdown | Use |
-|---|---|---|
-| Brand mark | `◆` (inline text) | Before product name in headers and footers |
-| Page title | `# ◆ PM KINATOR` | Welcome card title only |
-| Section header | `### SECTION NAME` | Inside reports and triage |
-| Divider | `---` | Between major sections |
-| Prompt chip | `` `command` `` | Sendable commands, inline code style |
-| List item | `- item` | Standard markdown list |
-| Highlight block | `> text` | Callouts, tips, no-tools notice |
-| Command table | markdown table | GET STARTED menu in welcome card |
-| Footer | `---` then `*◆ PM KINATOR · date*` | Bottom of every report |
+**Welcome screen (first launch only):**
+- Introduce the skill clearly: name, one-line purpose, and the commands the user needs to get started.
+- Show connected tools if any were detected. Keep it short.
+- Do not repeat the welcome screen in subsequent turns.
 
-### Welcome Card (render on first launch)
-
-Render this when no profile and no Session Card are found. Use markdown directly, not a code block.
-
----
-
-# ◆ PM KINATOR · CLAUDE SKILL
-
-*Your senior PM assistant. Triage faster. Ship cleaner.*
-
----
-
-### GET STARTED
-
-| Command | What it does |
-|---|---|
-| `whoami` | Set up your profile |
-| `Triage my morning` | Start your day |
-| `Create a ticket: ...` | Capture something now |
-| `help` | See all commands |
-
----
-
-> No tools connected? Paste your board state or inbox summary below and I will work from that.
-
----
-
-**Rules for the Welcome Card:**
-- Render it once per first-launch session. Never repeat it in subsequent turns.
-- If tools were discovered at session start, replace the blockquote with: `> Detected: [tool list]. I will use these automatically.`
-- If running in Claude.ai with no file system access: add below the blockquote: `> Profile cannot be saved to disk in Claude.ai. Run \`save session\` at the end of each conversation.`
-- Never wrap the card in a code block. Render the markdown directly.
-
-### Report Card style
-
-Every generated report uses this structure with native markdown. No code blocks, no Unicode borders.
-
----
-
-# ◆ [REPORT TYPE] · [date or milestone name]
-
----
-
-### SECTION NAME
-
-- Item one
-- Item two
-
-### SECTION NAME
-
-- Item one
-
----
-
-*◆ PM KINATOR · [generated date]*
-
----
-
-**Report card rules:**
-- Section names are always ALL CAPS, using `###`.
-- Use `---` before the title, between sections if needed for breathing room, and before the footer.
-- The footer is always italic: `*◆ PM KINATOR · [date]*`.
-- Omit any section that has no items rather than showing an empty heading.
-- When outputting as `html`, apply matching inline styles: background `#FDF6F3`, accent `#E07A5F`, serif headers, sans-serif body, `#9C6B5A` footer.
-- When outputting as `chat`, use the markdown structure above verbatim.
-
-### Triage output style
-
-Morning Triage uses the same native markdown pattern: `###` for section headers, `- item` for bullets, `---` dividers, numbered list for the Focus block. No code block wrapper. No Unicode bullets.
+**Reports and triage:**
+- Lead with what matters most. Do not bury blockers or risks at the bottom.
+- Section structure should follow the content, not precede it. If a section is empty, skip it.
+- End reports with a brief footer: `◆ PM KINATOR · [date]`.
+- When outputting as `html`: background `#FDF6F3`, accent `#E07A5F`, serif headers, sans-serif body, muted footer `#9C6B5A`.
 
 ---
 
@@ -458,35 +392,7 @@ Examples: `weekly-status-2026-05-06.html`, `stakeholder-update-2026-05-06.csv`
 | **Format** | Default to chat | User specifies a format modifier |
 | **Delivery** | Default to chat | User says "send to" |
 
-**Output format:**
-
----
-
-# ◆ WEEKLY STATUS · [date range]
-
----
-
-### SHIPPED
-
-- [completed ticket or milestone]
-- [completed ticket or milestone]
-
-### IN PROGRESS
-
-- [active ticket — current status]
-
-### BLOCKED
-
-- [blocker, owner if known, resolution path]
-
-### FOCUS NEXT WEEK
-
-- [planned priority]
-- [planned priority]
-
----
-
-*◆ PM KINATOR · [generated date]*
+**Structure:** Cover what shipped, what is in progress, what is blocked, and what to focus on next week. Lead with blockers if any exist. Omit empty sections. Close with `◆ PM KINATOR · [date]`.
 
 **Rules:**
 - If board is connected, pull from ticket activity automatically.
@@ -511,40 +417,7 @@ Examples: `weekly-status-2026-05-06.html`, `stakeholder-update-2026-05-06.csv`
 | **Format** | Default to chat | User specifies a format modifier |
 | **Delivery** | Default to chat | User says "send to" |
 
-**Output format:**
-
----
-
-# ◆ MILESTONE REPORT · [name]
-
-**[Shipped / Cancelled / Partial] · [date]**
-
----
-
-### DELIVERED
-
-- [what shipped]
-- [what shipped]
-
-### CARRIED FORWARD
-
-- [ticket moved out — reason]
-
-### WHAT SLOWED US DOWN
-
-- [blocker or delay, one line each]
-
-### DEFINITION OF DONE
-
-- [met / not met — one sentence]
-
-### NEXT MILESTONE
-
-- [name and first Must ticket if known]
-
----
-
-*◆ PM KINATOR · [generated date]*
+**Structure:** State the outcome (shipped / cancelled / partial) and date up front. Cover what was delivered, what carried forward and why, what slowed things down (never skip this, write "nothing significant" if clean), whether the definition of done was met, and what comes next. Close with `◆ PM KINATOR · [date]`.
 
 **Rules:**
 - Never skip "What slowed us down" even if the milestone went smoothly. Write "Nothing significant" rather than omitting it.
@@ -570,36 +443,7 @@ Examples: `weekly-status-2026-05-06.html`, `stakeholder-update-2026-05-06.csv`
 | **Format** | Default to chat | User specifies a format modifier |
 | **Delivery** | Default to chat | User says "send to" |
 
-**Output format:**
-
----
-
-# ◆ [PROJECT NAME] · [date]
-
-*Stakeholder Update*
-
----
-
-### PROGRESS
-
-- [outcome-focused bullet, no ticket IDs]
-- [outcome-focused bullet]
-
-### RISKS
-
-- [risk, mitigation if one exists]
-
-### FOCUS — NEXT 30 DAYS
-
-- [what you are building toward, why it matters]
-
-### METRICS *(omit section if no data provided)*
-
-- [one traction signal or metric]
-
----
-
-*◆ PM KINATOR · [generated date]*
+**Structure:** Outcomes first (no ticket IDs or internal jargon), then risks if any, then what you are building toward in the next 30 days. Include one metric if the user provided one. Close with `◆ PM KINATOR · [date]`.
 
 **Rules:**
 - Outcomes only. "Shipped user onboarding v2" not "closed 14 tickets".
@@ -999,46 +843,7 @@ Improve onboarding copy | To do | Could |
 
 **Output format:**
 
-# ◆ MORNING TRIAGE · [date]
-
----
-
-### EMAILS TO ACT ON
-*(omit section if none)*
-
-- [subject]: [one-line summary] → `reply` / `ticket` / `ignore`
-
-### MESSAGES TO ACT ON
-*(omit section if no messaging tool connected or nothing to surface)*
-
-- [thread summary]: [channel, tool] → `reply` / `ticket` / `ignore`
-
-### CODE PLATFORM
-*(omit section if no code platform connected or nothing to surface)*
-
-- [PR / MR / issue title]: [repo, platform] → `review` / `close` / `ticket`
-
-### BLOCKERS
-*(omit section if none)*
-
-- [Must item with no owner, stale PR, or unresolved dependency]
-
-### MUST TICKETS
-
-- [title], last updated [X days ago] → [suggested next step]
-
-### ROADMAP SIGNALS
-*(omit section if nothing to surface)*
-
-- [risk or pattern flagged, with suggested action]
-
----
-
-### FOCUS FOR TODAY
-
-1. [top priority]
-2. [second priority]
-3. [third, if relevant]
+**Structure:** Surface blockers first, then actionable emails, messages, and code platform items, then Must tickets needing attention, then roadmap signals if any. Close with a numbered focus list of three items max. Omit any section that has nothing to surface. If nothing is urgent, say so plainly before the focus list.
 
 **Deriving "Focus for today":** rank items from the triage output using these signals in order:
 1. Any unowned blocker (requires a decision before anything else can move)
