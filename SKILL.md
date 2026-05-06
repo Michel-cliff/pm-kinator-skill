@@ -38,27 +38,70 @@ If nothing is connected, output formatted text the user can copy-paste into what
 
 ## Brand and Visual Style
 
-**Core rule:** Never wrap output in a fenced code block unless showing actual code. Let Claude.ai's native markdown rendering do the work.
-
 **Brand values:** warm but direct, structured but not rigid, professional without being corporate. Outputs should feel like they came from a sharp colleague, not a template engine.
 
-**Formatting principles:**
-- Use markdown elements that fit the content: headers when there is hierarchy, tables when comparing, bullets when listing, blockquotes when calling something out. Do not force a structure that does not serve the content.
-- Never produce the same layout twice just because a template says to. Adapt to what the user needs in the moment.
-- Commands the user can type should always appear as inline code: `like this`.
-- The `◆` mark and the name PM KINATOR appear in headers and footers, but only where they add clarity, not as decoration on every line.
-- Omit any section, label, or divider that adds no information. Empty structure is noise.
+**Brand palette:**
+- Background: `#FDF6F3`
+- Accent / primary: `#E07A5F` (coral)
+- Text: `#2D2D2D`
+- Muted: `#9C6B5A`
+- Surface: `#FFFFFF`
+- Border: `#F0E0D6`
 
-**Welcome screen (first launch only):**
-- Introduce the skill clearly: name, one-line purpose, and the commands the user needs to get started.
-- Show connected tools if any were detected. Keep it short.
-- Do not repeat the welcome screen in subsequent turns.
+### Output mode selection
 
-**Reports and triage:**
-- Lead with what matters most. Do not bury blockers or risks at the bottom.
-- Section structure should follow the content, not precede it. If a section is empty, skip it.
-- End reports with a brief footer: `◆ PM KINATOR · [date]`.
-- When outputting as `html`: background `#FDF6F3`, accent `#E07A5F`, serif headers, sans-serif body, muted footer `#9C6B5A`.
+Choose the output mode based on the context:
+
+| Context | Mode | How |
+|---|---|---|
+| Claude.ai, any report or triage | **React artifact** | Generate an interactive dashboard as a React component artifact |
+| Claude.ai, welcome screen | **React artifact** | Generate an interactive welcome card as a React component artifact |
+| Claude Code or no artifact support | **Markdown** | Use native markdown, no code block wrappers |
+| User explicitly requests `as html` | **HTML artifact** | Generate a standalone HTML file artifact |
+
+**Default: always try the React artifact first in Claude.ai.** If artifact rendering is not available, fall back to markdown.
+
+### React artifact guidelines
+
+When generating a React artifact (type `application/vnd.ant.react`):
+
+**Stack:** React with inline Tailwind-style or inline CSS. No external dependencies. Use only what is available in the Claude.ai artifact sandbox (React, basic hooks, inline styles).
+
+**Design system:**
+- Font: system-ui or Georgia for headings, system-ui for body
+- Cards: white background, `1px solid #F0E0D6` border, `12px` border-radius, subtle shadow
+- Accent color: `#E07A5F` for headers, badges, active states, and progress indicators
+- Background: `#FDF6F3` page background
+- Status colors: green `#4CAF50` for done/shipped, amber `#FF9800` for in-progress, red `#F44336` for blocked, coral `#E07A5F` for Must priority
+
+**Interactivity:**
+- Reports: collapsible sections, status badge filters, copy-to-clipboard button for the full report
+- Triage: checkable items so the user can mark things done inline, focus list that highlights on hover
+- Welcome screen: clickable command chips that display the command text for the user to copy
+- Backlog: sortable columns by priority or status if data allows
+- Use `useState` for any toggling, filtering, or interactive state
+
+**Layout:**
+- Max width `720px`, centered
+- Section cards with `16px` padding, `12px` gap between cards
+- Header bar with `◆ PM KINATOR` left-aligned and the date right-aligned
+- Footer: muted small text `◆ PM KINATOR · [date]`
+- Mobile-friendly: single column, no horizontal scroll
+
+**Rules:**
+- Never include placeholder data. Only render real content from the session.
+- Omit any section that has no items.
+- Keep the component self-contained. No fetches, no external APIs inside the artifact.
+- After rendering the artifact, add one short line in the chat confirming what was generated. Example: "Weekly status for Apr 28 – May 4 rendered above."
+
+### Markdown fallback guidelines
+
+Used when artifacts are not available:
+- Never wrap output in a fenced code block unless showing actual code.
+- Use markdown elements that fit the content. Do not force structure.
+- Commands the user can type appear as inline code.
+- End reports with `◆ PM KINATOR · [date]`.
+- Lead with what matters most. Omit empty sections.
 
 ---
 
@@ -330,7 +373,7 @@ Examples:
 
 Apply the Content Generation Rule before generating any report. Ask all missing context in one message. Different audiences need different output: a weekly status for your own use reads nothing like an investor update.
 
-All reports are rendered using the Report Card style defined in the Brand and Visual Style section. The card shell (header, section structure, footer) is always applied. Content inside adapts per report type below.
+All reports are rendered as **React artifacts** in Claude.ai (see Brand and Visual Style for specs). Fall back to markdown only if artifacts are unavailable. Content structure per report type is defined below — the presentation adapts to the output mode.
 
 ---
 
@@ -865,7 +908,7 @@ Improve onboarding copy | To do | Could |
 5. Check for active roadmap risks or signals (if data available)
 6. If nothing is connected, ask the user to paste inbox summary and board state. Include the Board State Guidance in the ask so the user knows exactly what to provide.
 
-**Output format:**
+**Output:** Render as a **React artifact** in Claude.ai — an interactive triage dashboard where the user can check off items, filter by type, and see the focus list highlighted. Fall back to markdown if artifacts are unavailable.
 
 **Structure:** Surface blockers first, then actionable emails, messages, and code platform items, then Must tickets needing attention, then roadmap signals if any. Close with a numbered focus list of three items max. Omit any section that has nothing to surface. If nothing is urgent, say so plainly before the focus list.
 
